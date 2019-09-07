@@ -6,7 +6,6 @@
 package a.com.controller;
 
 import a.com.modelo.Persona;
-import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -14,7 +13,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -22,24 +21,18 @@ import javax.validation.constraints.Size;
  */
 @ManagedBean
 @RequestScoped
-public class ControllerRegistro implements Serializable {
+public class ControllerListar {
 
     @ManagedProperty("#{candidatoSession}")
     private CandidatoSession candidatoSession;
 
-    @Size(min = 1, max = 15)
-    private String nombre;
-
-    @Size(min = 1, max = 15)
-    private String apellido;
-
+    private Persona persona;
     @Min(100)
     @Max(1170970279)
-    private Integer cedula;
-
-    @Min(18)
-    @Max(50)
-    private Integer edad;
+    private int cedula;
+    private String nombre;
+    private String apellido;
+    private int edad;
 
     public CandidatoSession getCandidatoSession() {
         return candidatoSession;
@@ -49,7 +42,21 @@ public class ControllerRegistro implements Serializable {
         this.candidatoSession = candidatoSession;
     }
 
+    public Persona getPersona() {
+        return persona;
+    }
 
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public int getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(int cedula) {
+        this.cedula = cedula;
+    }
 
     public String getNombre() {
         return nombre;
@@ -67,33 +74,26 @@ public class ControllerRegistro implements Serializable {
         this.apellido = apellido;
     }
 
-    public Integer getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(Integer cedula) {
-        this.cedula = cedula;
-    }
-
-    public Integer getEdad() {
+    public int getEdad() {
         return edad;
     }
 
-    public void setEdad(Integer edad) {
+    public void setEdad(int edad) {
         this.edad = edad;
     }
-    
-    
 
-    public void guargar() {
+    public void editar(RowEditEvent event) {
+        Persona p = (Persona) event.getObject();
+        p.setCedula(cedula);
+        p.setNombre(nombre);
+        FacesMessage msg = new FacesMessage("Edicion Exitosa", ((Persona) event.getObject()).getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 
-        candidatoSession.getListaPersonas().add(new Persona(cedula, nombre, apellido, edad));
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información",
-                "Persona Agregada a su lista"));
     }
 
-    public ControllerRegistro() {
-    }
+    public void cancelar(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edicion Cancelada", ((Persona) event.getObject()).getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 
+    }
 }

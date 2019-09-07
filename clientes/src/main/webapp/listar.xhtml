@@ -1,14 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./template/masterPrincipal.xhtml">
 
             <ui:define name="content">
-                content
+                <h:form id="form">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <p:dataTable id="cars1" var="p" value="#{candidatoSession.listaPersonas}" editable="true" style="margin-bottom:20px">
+                        <f:facet name="header">
+                            Lista de Personas
+                        </f:facet>
+
+                        <p:ajax event="rowEdit" listener="#{controllerListar.editar}"  update=":form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{controllerListar.cancelar}" update=":form:msgs" />
+
+                        <p:column headerText="Cedula">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{p.cedula}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{controllerListar.cedula}" required="true" style="width:100%" label="Cedula" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Nombre">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{p.nombre}" /></f:facet>
+                                <f:facet name="input"><p:inputText  value="#{controllerListar.nombre}" required="true" style="width:100%" label="Nombre"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Apellido">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{p.apellido}" /></f:facet>
+                                <f:facet name="input"><p:inputText  value="#{controllerListar.apellido}" required="true" style="width:100%" label="Apellido"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Edad">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{p.edad}" /></f:facet>
+                                <f:facet name="input"><p:inputText  value="#{controllerListar.edad}" required="true" style="width:100%" label="Edad"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
             </ui:define>
 
         </ui:composition>

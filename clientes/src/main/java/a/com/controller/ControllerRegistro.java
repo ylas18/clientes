@@ -6,11 +6,15 @@
 package a.com.controller;
 
 import a.com.modelo.Persona;
+import a.com.modelo.Transaccion;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -21,21 +25,23 @@ import javax.validation.constraints.Size;
  * @author Yesid
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ControllerRegistro implements Serializable {
 
     @ManagedProperty("#{candidatoSession}")
     private CandidatoSession candidatoSession;
+
+    @Min(100)
+    @Max(1170970279)
+    private Integer cedula;
+
+    private String cliente;
 
     @Size(min = 1, max = 15)
     private String nombre;
 
     @Size(min = 1, max = 15)
     private String apellido;
-
-    @Min(100)
-    @Max(1170970279)
-    private Integer cedula;
 
     @Min(18)
     @Max(50)
@@ -49,7 +55,21 @@ public class ControllerRegistro implements Serializable {
         this.candidatoSession = candidatoSession;
     }
 
+    public Integer getCedula() {
+        return cedula;
+    }
 
+    public void setCedula(Integer cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
 
     public String getNombre() {
         return nombre;
@@ -67,14 +87,6 @@ public class ControllerRegistro implements Serializable {
         this.apellido = apellido;
     }
 
-    public Integer getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(Integer cedula) {
-        this.cedula = cedula;
-    }
-
     public Integer getEdad() {
         return edad;
     }
@@ -82,18 +94,15 @@ public class ControllerRegistro implements Serializable {
     public void setEdad(Integer edad) {
         this.edad = edad;
     }
-    
-    
 
-    public void guargar() {
+    public void guardar() {
 
-        candidatoSession.getListaPersonas().add(new Persona(cedula, nombre, apellido, edad));
+        candidatoSession.getListaPersonas().add(new Persona(cliente, cedula, nombre, apellido, edad));
+        candidatoSession.listaAdmin(cliente, nombre);
+
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información",
                 "Persona Agregada a su lista"));
-    }
-
-    public ControllerRegistro() {
     }
 
 }

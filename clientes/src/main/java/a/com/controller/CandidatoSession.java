@@ -6,11 +6,13 @@
 package a.com.controller;
 
 import a.com.modelo.Persona;
+import a.com.modelo.Transaccion;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -23,8 +25,20 @@ public class CandidatoSession implements Serializable {
 
     private List<Persona> listaPersonas;
 
+    @ManagedProperty("#{administradorSession}")
+    private AdministradorSession administradorSession;
+
+    public AdministradorSession getAdministradorSession() {
+        return administradorSession;
+    }
+
+    public void setAdministradorSession(AdministradorSession administradorSession) {
+        this.administradorSession = administradorSession;
+    }
+
     public CandidatoSession() {
         listaPersonas = new ArrayList<>();
+
     }
 
     public List<Persona> getListaPersonas() {
@@ -35,4 +49,7 @@ public class CandidatoSession implements Serializable {
         this.listaPersonas = listaPersonas;
     }
 
+    public void listaAdmin(String cliente, String nombre) {
+        administradorSession.getListaTra().add(new Transaccion(cliente, "Agregar", nombre));
+    }
 }

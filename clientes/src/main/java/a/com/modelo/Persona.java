@@ -11,21 +11,29 @@ import java.io.Serializable;
  *
  * @author Yesid
  */
-public class Persona implements Serializable{
+public class Persona implements Serializable {
 
+    private String cliente;
     private int cedula;
     private String nombre;
     private String apellido;
     private int edad;
 
-    public Persona(int cedula, String nombre, String apellido, int edad) {
+    public Persona(String cliente, int cedula, String nombre, String apellido, int edad) {
+        this.cliente = cliente;
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
     }
-    
-    
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
 
     public int getCedula() {
         return cedula;
@@ -58,8 +66,5 @@ public class Persona implements Serializable{
     public void setEdad(int edad) {
         this.edad = edad;
     }
-    
-    
-    
 
 }

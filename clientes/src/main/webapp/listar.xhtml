@@ -47,6 +47,15 @@
                                 <f:facet name="input"><p:inputText  value="#{controllerListar.edad}" required="true" style="width:100%" label="Edad"/></f:facet>
                             </p:cellEditor>
                         </p:column>
+
+                        <p:column headerText="Editar" style="width:35px">
+                            <p:rowEditor />
+                        </p:column  >
+                        <p:column headerText="Eliminar" style="width:50px">
+                            <p:commandButton value="Del" actionListener="#{controllerListar.eliminar(p)}" update="@form" >
+                                
+                            </p:commandButton>
+                        </p:column> 
                     </p:dataTable>
                 </h:form>
             </ui:define>

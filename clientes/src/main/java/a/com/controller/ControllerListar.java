@@ -6,12 +6,12 @@
 package a.com.controller;
 
 import a.com.modelo.Persona;
-import a.com.modelo.Transaccion;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -23,12 +23,11 @@ import org.primefaces.event.RowEditEvent;
  * @author Yesid
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ControllerListar {
 
     @ManagedProperty("#{candidatoSession}")
     private CandidatoSession candidatoSession;
-    private AdministradorSession administradorSession;
 
     private Persona persona;
     
@@ -112,14 +111,14 @@ public class ControllerListar {
         p.setNombre(nombre);
         p.setApellido(apellido);
         p.setEdad(edad);
-        administradorSession.getListaTra().add(new Transaccion(cliente, "Edicion", nombre));
+        candidatoSession.listaAdminEditar(cliente, nombre);
         FacesMessage msg = new FacesMessage("Edicion Exitosa", ((Persona) event.getObject()).getNombre());
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
     }
 
     public void cancelar(RowEditEvent event) {
-        administradorSession.getListaTra().add(new Transaccion(cliente, "Cancelacion", nombre));
+        candidatoSession.listaAdminCancelar(cliente, nombre);
         FacesMessage msg = new FacesMessage("Edicion Cancelada", ((Persona) event.getObject()).getNombre());
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
@@ -129,7 +128,7 @@ public class ControllerListar {
         
         List<Persona> listaPersona = candidatoSession.getListaPersonas();
         listaPersona.remove(p);
-        administradorSession.getListaTra().add(new Transaccion(cliente, "Eliminacion", nombre));
+        candidatoSession.listaAdminEliminar(cliente, p.getNombre());
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información",
                 "Persona Eliminada de su lista"));

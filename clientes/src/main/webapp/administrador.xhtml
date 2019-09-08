@@ -15,33 +15,35 @@
                     <p:growl id="msgs" showDetail="true"/>
 
                     <p:dataTable id="cars1" var="p" value="#{administradorSession.listaTra}" editable="true" style="margin-bottom:20px">
+
                         <f:facet name="header">
                             Lista de Transacciones
                         </f:facet>
                         <p:column headerText="Cliente">
-                            
+
                             <h:outputText value="#{p.cliente}" />
-                                
-                            
+
+
                         </p:column>
 
                         <p:column headerText="Procedimiento">
-                            
+
                             <h:outputText value="#{p.procedimiento}" />
-                                
-                         
+
+
                         </p:column>
                         <p:column headerText="Objeto">
-                       
-                            <h:outputText value="#{p.objeto}" />
-                                
-                       
-                        </p:column>
-           
 
-                      
-                     
+                            <h:outputText value="#{p.objeto}" />
+
+
+                        </p:column>
+
+
+
+
                     </p:dataTable>
+                   <p:poll update="@form" interval="3"/>
                 </h:form>
             </ui:define>
 

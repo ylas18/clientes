@@ -31,9 +31,11 @@ public class ControllerInicio {
     public String enviarDatos() {
         
          FacesContext context = FacesContext.getCurrentInstance();
-        ControllerRegistro res = context.getApplication().evaluateExpressionGet(context, "#{controllerRegistro}", ControllerRegistro.class);
+        ControllerRegistro reg = context.getApplication().evaluateExpressionGet(context, "#{controllerRegistro}", ControllerRegistro.class);
+        ControllerListar lis = context.getApplication().evaluateExpressionGet(context, "#{controllerListar}", ControllerListar.class);
         
-        res.setCliente(cliente);
+        reg.setCliente(cliente);
+        lis.setCliente(cliente);
          
         return "registro";
 

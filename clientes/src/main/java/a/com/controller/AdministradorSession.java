@@ -31,6 +31,10 @@ public class AdministradorSession implements Serializable {
         return listaTra;
     }
 
+    public void listaAct() {
+        getListaTra();
+    }
+
     public void setListaTra(List<Transaccion> listaTra) {
         this.listaTra = listaTra;
     }

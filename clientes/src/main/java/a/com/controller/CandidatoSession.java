@@ -49,7 +49,19 @@ public class CandidatoSession implements Serializable {
         this.listaPersonas = listaPersonas;
     }
 
-    public void listaAdmin(String cliente, String nombre) {
+    public void listaAdminAgregar(String cliente, String nombre) {
         administradorSession.getListaTra().add(new Transaccion(cliente, "Agregar", nombre));
+    }
+
+    public void listaAdminEditar(String cliente, String nombre) {
+        administradorSession.getListaTra().add(new Transaccion(cliente, "Edicion", nombre));
+    }
+
+    public void listaAdminEliminar(String cliente, String nombre) {
+        administradorSession.getListaTra().add(new Transaccion(cliente, "Eliminacion", nombre));
+    }
+
+    public void listaAdminCancelar(String cliente, String nombre) {
+        administradorSession.getListaTra().add(new Transaccion(cliente, "Edicion Cancelada", nombre));
     }
 }

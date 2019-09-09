@@ -181,7 +181,6 @@ public class ControllerRegistro implements Serializable {
 
         candidatoSession.getListaPersonas().add(new Persona(cliente, cedula, nombre, apellido, edad));
         candidatoSession.listaAdminAgregar(cliente, nombre);
-
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información",
                 "Persona Agregada a su lista"));
